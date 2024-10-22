@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://kit.fontawesome.com/f6ecd03ce1.js" crossorigin="anonymous"></script>
+
+    {% block head %}
+    {% endblock%}
+</head>
+<body>
+
+
+    {% block nav %}
+    <header>
+        <div class="navbar">
+            <div class="logo"><a href="/home">Application Tracker</a></div>
+       
+            <a href="/logout" class="nav-logout">Log-out</a>
+            <div class="toggle-btn">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </div>
+
+        <div class="dropdown-menu">
+            <a href="/logout" class="dropdown-btn">Logout</a>
+        </div>
+    </header>
+    {% endblock %}
+
+
+   
+    {% block body %}
+    {% endblock%}
+
+
+    <script>
+         // Function to go back in history when back button is clicked
+        function goBack() {
+            window.history.back();
+        }
+      
+        
+        // nav dropdown
+        const toggleBtn = document.querySelector('.toggle-btn');
+        const toggleBtnIcon = document.querySelector('.toggle-btn i');
+        const dropDownMenu = document.querySelector('.dropdown-menu');
+    
+        toggleBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            dropDownMenu.classList.toggle('show');
+            toggleBtnIcon.classList.toggle('fa-bars');
+            toggleBtnIcon.classList.toggle('fa-times');
+        });
+
+        // Close the dropdown when clicking outside
+        document.addEventListener('click', function (e) {
+            if (!dropDownMenu.contains(e.target) && !toggleBtn.contains(e.target)) {
+                dropDownMenu.classList.remove('show');
+
+                toggleBtnIcon.classList.remove('fa-times');
+                toggleBtnIcon.classList.add('fa-bars');
+            }
+        });
+       
+        // Function to go back in history when back button is clicked
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+   
+</body>
+</html>

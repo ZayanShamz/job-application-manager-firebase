@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Sign-up</title>
+{% endblock%}
+
+
+{% block nav %}
+{% endblock %}
+
+
+{% block body %}
+<div class="content">
+    <div class="form-container">
+        <form method="post" class="form" action="/register" onsubmit="return validatePasswords()">
+            <h1>Register</h1>
+            <div class="input-form">
+                <input type="text" id="username" name="username" placeholder="Enter your name" required/>
+            </div>
+            <div class="input-form">
+                <input type="text" id="email" name="email" placeholder="Enter your email" required/>
+            </div>
+            <div class="input-form">
+                <input type="password" id="password" name="password" placeholder="Create a password" required />
+                <i class="fa-solid fa-eye-slash togglePassword" data-target="password"></i>
+                <i class="fa-solid fa-eye togglePasswordVisible" data-target="password" style="display:none;"></i>
+            </div>
+            <div class="input-form">
+                <input type="password" id="confirmPassword" class="cPass" name="confirmPassword" placeholder="Confirm password" required />
+                <i class="fa-solid fa-eye-slash togglePassword" data-target="confirmPassword"></i>
+                <i class="fa-solid fa-eye togglePasswordVisible" data-target="confirmPassword" style="display:none;"></i>
+            </div>
+        
+            <button type="submit" class="btn">Register</button>
+
+            <div class="reg-link">
+                <p>Already have an account?<a href="/"> Sign in.</a></p>
+            </div>  
+        </form>
+        
+    </div>
+</div>
+
+<script>
+    function togglePasswordVisibility(event) {
+        const inputId = event.target.getAttribute('data-target');
+        const inputField = document.getElementById(inputId);
+        const isPasswordType = inputField.getAttribute('type') === 'password';
+        
+        inputField.setAttribute('type', isPasswordType ? 'text' : 'password');
+
+        const toggleIcon = document.querySelector(`.togglePassword[data-target="${inputId}"]`);
+        const toggleVisibleIcon = document.querySelector(`.togglePasswordVisible[data-target="${inputId}"]`);
+
+        toggleIcon.style.display = isPasswordType ? 'none' : 'inline';
+        toggleVisibleIcon.style.display = isPasswordType ? 'inline' : 'none';
+    }
+
+    const togglePasswordIcons = document.querySelectorAll('.togglePassword, .togglePasswordVisible');
+    togglePasswordIcons.forEach(icon => {
+        icon.addEventListener('click', togglePasswordVisibility);
+    });
+
+    document.getElementById('confirmPassword').addEventListener('input', validatePasswords);
+    document.getElementById('password').addEventListener('input', validatePasswords);
+
+    function validatePasswords() {
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword');
+        
+        if (password !== confirmPassword.value) {
+            confirmPassword.style.boxShadow = '0 0 10px #b01818';
+            confirmPassword.style.borderColor = '#b01818';
+        } else {
+            confirmPassword.style.boxShadow = 'none';
+            confirmPassword.style.borderColor = ''; 
+        }
+    }
+</script>
+{% endblock%}

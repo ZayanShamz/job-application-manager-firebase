@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>{{ job.title }}@{{ job.company_name }}</title>
+{% endblock%}
+
+
+{% block body %}
+<div class="content">
+    <div class="body-container">
+        <div class="inner-container">
+            <div class="inner-item">
+                <div class="inner-icons">
+                    <a href="/edit/{{ job_id }}" class="edit-btn" title="Edit this application">
+                        <i class="fa-regular fa-pen-to-square"></i></a>
+                    <a href="/home" class="remove-btn">
+                        <i class="fa-solid fa-right-to-bracket"></i></a>
+                </div>
+
+                <div class="item-content">
+                    <div class="item-row">
+                        <span class="item-title">Date:</span>
+                        <span class="item-text">{{ job.date[8:10] }}{{ job.date[4:8] }}{{ job.date[0:4] }}</span>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-title">Company:</span>
+                        <span class="item-text">{{ job.company_name }}</span>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-title">Position:</span>
+                        <span class="item-text">{{ job.job_title }}</span>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-title">Job Description:</span>
+                        <span class="item-text">{{ job.job_description }}</span>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-title">Requirements:</span>
+                        <span class="item-text">{{ job.job_requirements }}</span>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-title">Status:</span>
+                        <span class="item-text">{{ job.status }}</span>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-title">Reference:</span>
+                        <span class="item-text">{{ job.reference }}</span>
+                    </div>
+                    <div class="item-row">
+                        <span class="item-title">Platform:</span>
+                        <span class="item-text">{{ job.platform }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock%}

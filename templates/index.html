@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>{{ username }}@ Application Tracker</title>
+{% endblock%}
+
+{% block body %}
+<div class="content">
+    <div class="body-container">
+        <div class="inner-container">
+            <div class="table-container">
+                <table id="job-table">
+                    <thead>
+                        <tr>
+                            <th onclick="sortTable(0)">Sl. No.</th>
+                            <th onclick="sortTable(1)">Job Title</th>
+                            <th onclick="sortTable(2)">Company</th>
+                            <th onclick="sortTable(3)">Status</th>
+                            <th onclick="sortTable(4)">Date Applied</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="add-new" id="open-modal">
+                            <td><i class="fa-solid fa-plus"></i></td>
+                            <td>Add New...</td>
+                            <td>...</td>
+                            <td>...</td>
+                            <td>...</td>
+                        </tr>
+                        {% if jobs %}
+                        {% for job in jobs %}
+                        <tr class="item-list" onclick="window.location='/dashboard/{{ job.job_id }}'">
+                            <td>{{ loop.index }}</td>
+                            <td>{{ job.job_title }}</td>
+                            <td>{{ job.company_name }}</td>
+                            <td>{{ job.status }}</td>
+                            <td>{{ job.date[8:10] }}{{ job.date[4:8] }}{{ job.date[0:4] }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal HTML -->
+<div id="add-modal" class="add-modal">
+
+    <div class="add-modal-content">
+        <span class="close-modal">&times;</span>
+        <h1>New Application</h1>
+            <form method="post" class="modal-form" action="/home">
+
+                <div class="modal-input">
+                    <input type="text" id="company" name="company" placeholder="Company Name" required/>
+                </div>
+
+                <div class="modal-input">
+                    <input type="text" list="jobTitles" id="jobTitle" name="jobTitle" placeholder="Job title" required/>
+                    <datalist id="jobTitles">
+                        <option value="Web Developer">
+                        <option value="Front-end Developer">
+                        <option value="Back-end Developer">
+                        <option value="React Developer">
+                        <option value="Full-Stack Developer">
+                    </datalist>
+                </div>
+                <div class="modal-input">
+                    <textarea type="text" id="description" name="description" placeholder="Job Description" required oninput="autoGrow(this)"></textarea>
+                </div>
+
+                <div class="modal-input">
+                    <textarea type="text" id="requirement" name="requirement" placeholder="Job Requirements" required oninput="autoGrow(this)"></textarea>
+                </div>
+                <div class="modal-input">
+                    <input type="text" list="platforms" id="platform" name="platform" placeholder="Platform" required/>
+                    <datalist id="platforms">
+                        <option value="Linkedin">
+                        <option value="Indeed">
+                        <option value="Naukri">
+                    </datalist>
+                </div>
+                <div class="modal-input">
+                    <input type="date" id="date" name="date" placeholder="Select Date" required/>
+                </div>
+            
+                <button type="submit" class="btn">ADD</button>
+            </form>
+    </div>
+  
+</div>
+
+<!---------------- js --------------------->
+<script>
+
+    // textarea height --------------------------------
+    function autoGrow(element) {
+        element.style.height = "auto"; 
+        if (element.scrollHeight <= parseInt(getComputedStyle(element).maxHeight)) {
+            element.style.height = element.scrollHeight + "px";
+        } else {
+            element.style.height = getComputedStyle(element).maxHeight; 
+        }
+    }
+
+    //   MODAL --------------------------------------------------
+    var modal = document.getElementById("add-modal");
+    var btn = document.getElementById("open-modal");
+    var span = document.getElementsByClassName("close-modal")[0];
+
+    btn.onclick = function() {
+     modal.style.display = "block";
+    }
+
+    span.onclick = function() {
+     modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+//   sorting --------------------------------------------------------------
+let sortOrder = {}; 
+
+function sortTable(columnIndex) {
+    let table = document.getElementById("job-table");
+    let rows = Array.from(table.querySelectorAll("tbody tr")).slice(1); // Skip the 'Add New' row
+
+   
+    sortOrder[columnIndex] = sortOrder[columnIndex] === 'asc' ? 'desc' : 'asc';
+    let order = sortOrder[columnIndex];
+
+    rows.sort(function(rowA, rowB) {
+        let cellA = rowA.getElementsByTagName("td")[columnIndex].textContent.toLowerCase();
+        let cellB = rowB.getElementsByTagName("td")[columnIndex].textContent.toLowerCase();
+
+       
+        if (columnIndex === 0) {
+            cellA = parseInt(cellA);
+            cellB = parseInt(cellB);
+        }
+
+        if (columnIndex === 4) {
+            let dateA = cellA.split("-");
+            let dateB = cellB.split("-");
+            cellA = new Date(`${dateA[2]}-${dateA[1]}-${dateA[0]}`);
+            cellB = new Date(`${dateB[2]}-${dateB[1]}-${dateB[0]}`);
+        }
+
+
+        if (order === 'asc') {
+            return cellA > cellB ? 1 : cellA < cellB ? -1 : 0;
+        } else {
+            return cellA < cellB ? 1 : cellA > cellB ? -1 : 0;
+        }
+    });
+
+    rows.forEach(function(row) {
+        table.querySelector("tbody").appendChild(row);
+    });
+}
+
+</script>
+
+{% endblock%}
