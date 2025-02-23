@@ -2,7 +2,8 @@ from flask import Flask, session, request, render_template, redirect, url_for
 import pyrebase
 import os
 from dotenv import load_dotenv
-
+import base64
+import json
 import firebase_admin
 from firebase_admin import credentials, auth
 from firebase_admin.auth import UserNotFoundError, get_user_by_email
@@ -10,11 +11,12 @@ from firebase_admin.auth import UserNotFoundError, get_user_by_email
 
 load_dotenv()
 
-# Path to service account key file
-SERVICE_ACCOUNT_KEY_PATH = os.getenv('FIREBASE_SERVICE_ACCOUNT_KEY_PATH')
 
-# Initialize the Firebase Admin SDK
-cred = credentials.Certificate(SERVICE_ACCOUNT_KEY_PATH)
+encoded_json = os.getenv("FIREBASE_SERVICE_ACCOUNT_KEY")
+decoded_json = json.loads(base64.b64decode(encoded_json).decode())
+
+# Initialize Firebase Admin SDK
+cred = credentials.Certificate(decoded_json)
 firebase_admin.initialize_app(cred)
 
 
