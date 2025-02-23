@@ -1,97 +1,166 @@
-{% extends 'base.html' %}
-
-{% block head %}
+{% extends 'base.html' %} {% block head %}
 <title>Edit Details</title>
-{% endblock%}
-
-
-{% block body %}
+{% endblock%} {% block body %}
 <div class="content">
-    <div class="body-container">
-        <div class="inner-container">
-            <div class="inner-item">
-                <div class="inner-icons">
-                    <a href="/delete/{{ job_id }}" class="remove-btn" title="Remove this application"  onclick="return confirmDelete();">
-                        <i class="fa-regular fa-trash-can"></i></a>
-                    <a href="/dashboard/{{ job_id }}" class="remove-btn">
-                        <i class="fa-solid fa-right-to-bracket"></i></a>
-                </div>
-                <br>
-                <br>
-                <form method="post" class="modal-form" action="/edit/{{job_id}}">
-
-                    <div class="modal-input">
-                        <input type="date" id="date" name="date" placeholder="Select Date" value="{{ job.date }}" required/>
-                    </div>
-
-                    <div class="modal-input">
-                        <input type="text" id="company" name="company" placeholder="Company Name" value="{{ job.company_name }}" required/>
-                    </div>
-    
-                    <div class="modal-input">
-                        <input type="text" list="jobTitles" id="jobTitle" name="jobTitle" placeholder="Job title" value="{{ job.job_title }}" required/>
-                        <datalist id="jobTitles">
-                            <option value="Web Developer">
-                            <option value="Front-end Developer">
-                            <option value="Back-end Developer">
-                            <option value="React Developer">
-                            <option value="Full-Stack Developer">
-                        </datalist>
-                    </div>
-                   
-                    <div class="modal-input">
-                        <p>Job Description :</p>
-                        <textarea type="text" id="description" name="description" placeholder="Job Description" oninput="autoGrow(this)" required>{{ job.job_description }}</textarea>
-                    </div>
-                    
-                    <div class="modal-input">
-                        <p>Job Requirements :</p>
-                        <textarea type="text" id="requirement" name="requirement" placeholder="Job Requirements" oninput="autoGrow(this)" required>{{ job.job_requirements }}</textarea>
-                    </div>
-
-                    
-                    <div class="modal-input">
-                        <input type="text" list="platforms" id="platform" name="platform" placeholder="Platform" value="{{ job.platform }}" required/>
-                        <datalist id="platforms">
-                            <option value="Linkedin">
-                            <option value="Indeed">
-                            <option value="Naukri">
-                        </datalist>
-                    </div>
-
-                    <div class="modal-input">
-                        <input type="text" list="statuses" id="status" name="status" placeholder="Status" value="{{ job.status }}" required/>
-                        <datalist id="statuses">
-                            <option value="Applied">
-                            <option value="Rejected">
-                            <option value="Interview">
-                        </datalist>
-                    </div>
-
-                    <div class="modal-input">
-                        <input type="text" id="follow-up" name="follow-up" placeholder="Follow Up" value="{{ job.reference }}" required/>
-                    </div>
-                
-                    <button type="submit" class="btn">SUBMIT</button>
-                </form>
-            </div>
+  <div class="body-container">
+    <div class="inner-container">
+      <div class="inner-item">
+        <div class="inner-icons">
+          <a
+            href="/delete/{{ job_id }}"
+            class="remove-btn"
+            title="Remove this application"
+            onclick="return confirmDelete();"
+          >
+            <i class="fa-regular fa-trash-can"></i
+          ></a>
+          <a href="/dashboard/{{ job_id }}" class="remove-btn">
+            <i class="fa-solid fa-right-to-bracket"></i
+          ></a>
         </div>
+        <br />
+        <br />
+        <form method="post" class="modal-form" action="/edit/{{job_id}}">
+          <div class="modal-input">
+            <label>Date Applied :</label>
+            <input
+              type="date"
+              id="date"
+              name="date"
+              placeholder="Select Date"
+              value="{{ job.date }}"
+              required
+            />
+          </div>
+
+          <div class="modal-input">
+            <label>Company Name :</label>
+            <input
+              type="text"
+              id="company"
+              name="company"
+              placeholder="Company Name"
+              value="{{ job.company_name }}"
+              required
+            />
+          </div>
+
+          <div class="modal-input">
+            <label>Job Title :</label>
+            <input
+              type="text"
+              list="jobTitles"
+              id="jobTitle"
+              name="jobTitle"
+              placeholder="Job title"
+              value="{{ job.job_title }}"
+              required
+            />
+            <datalist id="jobTitles">
+              <option value="Web Developer"></option>
+              <option value="Front-end Developer"></option>
+              <option value="Back-end Developer"></option>
+              <option value="React Developer"></option>
+              <option value="Full-Stack Developer"></option>
+            </datalist>
+          </div>
+
+          <div class="modal-input">
+            <label>Job Description :</label>
+            <textarea
+              type="text"
+              id="description"
+              name="description"
+              placeholder="Job Description"
+              oninput="autoGrow(this)"
+              required
+            >
+{{ job.job_description }}</textarea
+            >
+          </div>
+
+          <div class="modal-input">
+            <label>Job Requirements :</label>
+            <textarea
+              type="text"
+              id="requirement"
+              name="requirement"
+              placeholder="Job Requirements"
+              oninput="autoGrow(this)"
+              required
+            >
+{{ job.job_requirements }}</textarea
+            >
+          </div>
+
+          <div class="modal-input">
+            <label>Platform Applied On:</label>
+            <input
+              type="text"
+              list="platforms"
+              id="platform"
+              name="platform"
+              placeholder="Platform"
+              value="{{ job.platform }}"
+              required
+            />
+            <datalist id="platforms">
+              <option value="Linkedin"></option>
+              <option value="Indeed"></option>
+              <option value="Naukri"></option>
+            </datalist>
+          </div>
+
+          <div class="modal-input">
+            <label>Current Status :</label>
+            <input
+              type="text"
+              list="statuses"
+              id="status"
+              name="status"
+              placeholder="Status"
+              value="{{ job.status }}"
+              required
+            />
+            <datalist id="statuses">
+              <option value="Applied"></option>
+              <option value="Rejected"></option>
+              <option value="Interview"></option>
+            </datalist>
+          </div>
+
+          <div class="modal-input">
+            <label>Reference :</label>
+            <input
+              type="text"
+              id="follow-up"
+              name="follow-up"
+              placeholder="Follow Up"
+              value="{{ job.reference }}"
+              required
+            />
+          </div>
+
+          <button type="submit" class="btn">SUBMIT</button>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 
 <script>
-    // textarea height --------------------------------
-    function autoGrow(element) {
-        element.style.height = "auto"; 
-        if (element.scrollHeight <= parseInt(getComputedStyle(element).maxHeight)) {
-            element.style.height = element.scrollHeight + "px"; 
-        } else {
-            element.style.height = getComputedStyle(element).maxHeight; 
-        }
+  // textarea height --------------------------------
+  function autoGrow(element) {
+    element.style.height = "auto";
+    if (element.scrollHeight <= parseInt(getComputedStyle(element).maxHeight)) {
+      element.style.height = element.scrollHeight + "px";
+    } else {
+      element.style.height = getComputedStyle(element).maxHeight;
     }
+  }
 
-    function confirmDelete() {
-        return confirm("Are you sure you want to delete this application?");
-    }
+  function confirmDelete() {
+    return confirm("Are you sure you want to delete this application?");
+  }
 </script>
 {% endblock%}

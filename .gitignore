@@ -4,3 +4,6 @@
 # Virtual environment
 venv/
 env/
+
+#firebase admin sdk
+flask-application-tracker-firebase-adminsdk-hymun-bf3f39c349.json
